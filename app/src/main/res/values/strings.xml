@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AndroidApp</string>
+    <string name="Username">Name</string>
+    <string name="Password">password</string>
+    <string name="Displayname">displayname</string>
+    <string name="PasswordValidation">passwordValidation</string>
+    <string name="Register">register</string>
 </resources>

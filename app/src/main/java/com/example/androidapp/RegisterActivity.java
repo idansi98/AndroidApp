@@ -12,6 +12,7 @@ public class RegisterActivity extends AppCompatActivity {
     /*
     FirebaseAuth auth;
     DatabaseReference ref;*/
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

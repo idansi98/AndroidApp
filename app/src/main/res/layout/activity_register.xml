@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:ems="10"
-            android:hint="@string/Username"
+            android:hint="@string/username"
             android:inputType="textPersonName" />
 
         <EditText
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:ems="10"
-            android:hint="@string/Displayname"
+            android:hint="@string/displayname"
             android:inputType="textPersonName" />
 
         <EditText
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:ems="10"
-            android:hint="@string/Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
 
         <EditText
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:ems="10"
-            android:hint="@string/PasswordValidation"
+            android:hint="@string/repeatpassword"
             android:inputType="textPassword" />
 
         <Button

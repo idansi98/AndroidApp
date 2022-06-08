@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +16,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText userName, displayName, password, passwordValidator;
     Button registerButton;
     List<String> stringList;
+
     /*
     FirebaseAuth auth;
     DatabaseReference ref;*/
@@ -29,7 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
         passwordValidator = findViewById(R.id.editTextTextPasswordValidation);
         registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(v -> {
-            if (!valid()) {
+            if (!isValid(userName.getText().toString(), password.getText().toString(),
+                    passwordValidator.getText().toString(), displayName.getText().toString())) {
                 return;
             }
             //try to add user.
@@ -41,17 +44,40 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(i);
         });
     }
-    private boolean createUser (String userName, String displayName, String password) {
+
+    private boolean createUser(String userName, String displayName, String password) {
         try {
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.e("Fetch", e.getMessage().toLowerCase(Locale.ROOT));
             return false;
         }
 
     }
-    private boolean valid () {
+
+    private boolean isValid(String userName, String password, String passwordValidator,
+                            String displayName) {
+        if (userName.isEmpty() || password.isEmpty() || passwordValidator.isEmpty()
+                || displayName.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Please fill in all the fields!",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (password.length() < 8) {
+            Toast.makeText(getApplicationContext(), "The password is too short!",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (password.length() > 14) {
+            Toast.makeText(getApplicationContext(), "The password is too long!",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (!password.equals(passwordValidator)) {
+            Toast.makeText(getApplicationContext(), "The passwords are not the same!",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
         return true;
     }
 }

@@ -32,15 +32,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(this, RegisterActivity.class);
             startActivity(i);
         });
-
-        /*loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String UserName = userName.getText().toString();
-                String Password = password.getText().toString();
-
-            }
-        });*/
     }
     private boolean login (String userName, String password) throws InterruptedException {
         LoginRunner foo = new LoginRunner();
@@ -48,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
         Thread thread = new Thread(foo);
         thread.start();
         thread.join();
-        //int value = foo.getValue();
         Log.d("Fetch_Login", "Here");
         return foo.getValue();
     }

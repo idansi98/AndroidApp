@@ -25,7 +25,8 @@
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.593">
+        app:layout_constraintVertical_bias="0.711"
+        tools:layout_editor_absoluteX="16dp">
 
         <EditText
             android:id="@+id/editTextTextPersonName"
@@ -53,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#233FEF"
-            app:backgroundTint="@null"
-            android:text="@string/login" />
+            android:text="@string/login"
+            app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/toRegButton"

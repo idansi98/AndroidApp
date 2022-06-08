@@ -23,8 +23,9 @@
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.662">
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.531"
+        tools:layout_editor_absoluteX="0dp">
 
         <EditText
             android:id="@+id/editTextTextPersonName"
@@ -70,6 +71,17 @@
             android:background="#233FEF"
             android:text="@string/Register"
             app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/toLoginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:background="@color/teal_200"
+            android:text="Already Registered? Click Here"
+            app:backgroundTint="@null"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     </LinearLayout>
 

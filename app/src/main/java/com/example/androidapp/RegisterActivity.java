@@ -9,13 +9,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
 import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText userName, displayName, password, passwordValidator;
-    Button registerButton;
-    List<String> stringList;
+    Button registerButton, toLoginButton;
 
     /*
     FirebaseAuth auth;
@@ -30,14 +28,19 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.editTextTextPassword);
         passwordValidator = findViewById(R.id.editTextTextPasswordValidation);
         registerButton = findViewById(R.id.registerButton);
+        toLoginButton = findViewById(R.id.toLoginButton);
+        toLoginButton.setOnClickListener(v -> {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+        });
         registerButton.setOnClickListener(v -> {
             if (!isValid(userName.getText().toString(), password.getText().toString(),
                     passwordValidator.getText().toString(), displayName.getText().toString())) {
                 return;
             }
             //try to add user.
-            boolean result = createUser(userName.getText().toString(), displayName.getText().toString(),
-                    password.getText().toString());
+            boolean result = createUser(userName.getText().toString(), displayName.getText().
+                            toString(), password.getText().toString());
 
             Intent i = new Intent(this, RegisterActivity.class);
             //i.putExtra();

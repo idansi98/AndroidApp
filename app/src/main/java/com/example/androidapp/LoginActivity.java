@@ -1,20 +1,19 @@
 package com.example.androidapp;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class LoginActivity extends AppCompatActivity {
     EditText userName, password;
@@ -54,9 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             Log.d("Login_Logging", "Async method started running");
             try {
-                URL url = new URL("https://10.0.2.2:25565/api/login");
+                URL url = new URL("http://10.0.2.2:25565/api/login");
                 Log.d("Login_Logging", "Trying to connect to: " + url.toString());
-                HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
                 con.setRequestProperty("content-type", "application/json");
 

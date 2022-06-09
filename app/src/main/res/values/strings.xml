@@ -21,4 +21,6 @@
     <string name="login_failed">"Login failed"</string>
     <string name="login">Login</string>
     <string name="not_registered_click_here">Not registered? Click here</string>
+    <string name="usernametext">UserName</string>
+    <string name="write_message">Write message...</string>
 </resources>

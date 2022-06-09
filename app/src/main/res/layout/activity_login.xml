@@ -5,27 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_register"
-    tools:context=".RegisterActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="282dp"
         android:layout_height="211dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.531"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintVertical_bias="0.711"
+        tools:layout_editor_absoluteX="16dp">
 
         <EditText
             android:id="@+id/editTextTextPersonName"
@@ -36,14 +38,6 @@
             android:hint="@string/username"
             android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/editTextTextDisplayName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:ems="10"
-            android:hint="@string/displayname"
-            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editTextTextPassword"
@@ -54,35 +48,28 @@
             android:hint="@string/password"
             android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/editTextTextPasswordValidation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:ems="10"
-            android:hint="@string/repeatpassword"
-            android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/loginButton"
             android:layout_width="164dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#233FEF"
-            android:text="@string/Register"
+            android:text="@string/login"
             app:backgroundTint="@null" />
 
         <Button
-            android:id="@+id/toLoginButton"
+            android:id="@+id/toRegButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="76dp"
             android:background="@color/teal_200"
-            android:text="Already Registered? Click Here"
+            android:text="@string/not_registered_click_here"
             app:backgroundTint="@null"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

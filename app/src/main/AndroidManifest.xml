@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.androidapp">
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,10 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidApp"
         tools:targetApi="31">
-<!--        <activity&ndash;&gt;
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <!--
+<activity&ndash;&gt;
 &lt;!&ndash;            android:name=".ui.login.LoginActivity"&ndash;&gt;
 &lt;!&ndash;            android:exported="false"&ndash;&gt;
-&lt;!&ndash;            android:label="@string/title_activity_login" />-->-->
+&lt;!&ndash;            android:label="@string/title_activity_login" />
+        -->
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />

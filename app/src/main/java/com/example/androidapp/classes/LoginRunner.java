@@ -17,7 +17,7 @@ public class LoginRunner implements Runnable {
     @Override
     public void run() {
         try {
-            URL url = new URL("https://localhost:25565/api/login");
+            URL url = new URL("https://10.0.2.2:25565/api/login");
             HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("content-type", "application/json");

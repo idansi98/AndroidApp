@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.androidapp.classes.LoginRunner;
+import com.example.androidapp.runners.LoginRunner;
 
 public class LoginActivity extends AppCompatActivity {
     EditText userName, password;

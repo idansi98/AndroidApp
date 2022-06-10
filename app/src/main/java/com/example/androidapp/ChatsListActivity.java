@@ -17,18 +17,17 @@ public class ChatsListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        RecyclerView chatslist = findViewById(R.id.chatslist);
+        setContentView(R.layout.activity_chats_list);
+
+        RecyclerView chatsList = findViewById(R.id.chatsList);
+        final ChatsListAdapter adapter = new ChatsListAdapter(this);
+        chatsList.setAdapter(adapter);
+        chatsList.setLayoutManager(new LinearLayoutManager(this));
 
         List<Chat> chats = new ArrayList<>();
-        chats.add(new Chat(1,"Idan Simai", "IS","Null"));
-        chats.add(new Chat(2,"Ido Tziony", "IT","Null"));
-        chats.add(new Chat(3,"Hemi Leibo", "HL","Null"));
-
-        ChatsListAdapter adapter = new ChatsListAdapter(this);
-        chatslist.setAdapter(adapter);
-        chatslist.setLayoutManager(new LinearLayoutManager(this));
-
+        chats.add(new Chat(1,"alice","Alice","x"));
+        chats.add(new Chat(2,"bob","Bob","x"));
+        chats.add(new Chat(3,"charlie","Charlie","x"));
         adapter.setChats(chats);
     }
 }

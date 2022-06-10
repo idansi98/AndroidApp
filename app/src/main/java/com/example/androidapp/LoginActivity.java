@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "OutDB")
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "OurDB")
                 .allowMainThreadQueries().build();
         userDao = db.userDao();
         login_status = false;
@@ -74,21 +74,23 @@ public class LoginActivity extends AppCompatActivity {
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
                 con.setRequestProperty("content-type", "application/json");
+                String currentUserName = params[0];
+                String currentPassword= params[1];
 
                 /* Payload support */
                 con.setDoOutput(true);
                 DataOutputStream out = new DataOutputStream(con.getOutputStream());
-                out.writeBytes("{\"username\":\""+userName.getText().toString()+"\"," +
-                        "\"password\":\""+password.getText().toString()+"\"}");
-                Log.d("Fetch_Login", "{\"username\":\""+userName.getText().toString()
-                        +"\",\"password\":\""+password.getText().toString()+"\"}");
+                out.writeBytes("{\"username\":\""+currentUserName+"\"," +
+                        "\"password\":\""+currentPassword+"\"}");
+                Log.d("Fetch_Login", "{\"username\":\""+currentUserName
+                        +"\",\"password\":\""+currentPassword+"\"}");
                 out.flush();
                 out.close();
 
                 int status = con.getResponseCode();
                 con.disconnect();
                 login_status =  (status >= 200 && status < 300);
-                Log.d("Login_Logging", "Async method finished, login_status is " +
+                Log.d("Login_Logging", "Async method finished, status code is " +
                         status);
                 return "Maybe?";
             }

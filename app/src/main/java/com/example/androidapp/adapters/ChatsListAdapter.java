@@ -1,10 +1,10 @@
 package com.example.androidapp.adapters;
 
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,77 +14,64 @@ import com.example.androidapp.classes.Chat;
 
 import java.util.List;
 
-public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.ViewHolder> {
-    private List<Chat> chats;
-    private LayoutInflater lif;
+public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.ChatViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    class ChatViewHolder extends RecyclerView.ViewHolder {
         private final TextView userName;
         private final TextView lastMessage;
         private final TextView dateTime;
-        private final ImageView profileImage;
 
-        public ViewHolder(View view) {
+        private ChatViewHolder(View view) {
             super(view);
             this.userName = view.findViewById(R.id.username);
             this.lastMessage = view.findViewById(R.id.lastmessage);
             this.dateTime = view.findViewById(R.id.datetime);
-            this.profileImage = view.findViewById(R.id.profile_image);
         }
-
-        public TextView getUserName() {
-            return userName;
-        }
-
-        public TextView getLastMessage() {
-            return lastMessage;
-        }
-
-        public TextView getDateTime() {
-            return dateTime;
-        }
-
-        public ImageView getProfileImage() {
-            return profileImage;
-        }
-
     }
-
+    private final LayoutInflater mInflater;
+    private List<Chat> chats;
 
     public ChatsListAdapter(Context context) {
-        this.lif = LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(context);
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
-        View view = lif.inflate(R.layout.chatitem, viewGroup, false);
-        return new ViewHolder(view);
+    public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = mInflater.inflate(R.layout.chatitem, parent, false);
+        return new ChatViewHolder(itemView);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(ChatViewHolder holder, int position) {
         if (chats != null) {
             final Chat current = chats.get(position);
-            viewHolder.userName.setText(current.getUserName());
-            viewHolder.profileImage.setImageResource(R.drawable.logo);
-            viewHolder.dateTime.setText("HEYYYY");
+            holder.userName.setText(current.getUserName());
+            holder.lastMessage.setText("TEMPORARY");
+            holder.dateTime.setText("TEMPORARY");
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        if (chats != null) {
-            return chats.size();
-        }
-        return 0;
-    }
-    public void setChats(List <Chat> s) {
-        this.chats = s;
+    public void setChats(List<Chat> s) {
+        chats = s;
         notifyDataSetChanged();
     }
+
+    @Override
+    public int getItemCount() {
+        if(chats != null) {
+            return chats.size();
+        }
+        else return 1;
+    }
+
+    public List<Chat> getChats() {
+        return chats;
+    }
 }
+
+
+
+
+
+
 

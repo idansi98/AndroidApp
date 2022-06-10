@@ -27,12 +27,16 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         toRegisterButton = findViewById(R.id.toRegButton);
         loginButton.setOnClickListener(v -> {
-            try {
+            Intent i = new Intent(this, ChatsListActivity.class);
+            startActivity(i);
+            /*try {
                 login(userName.getText().toString(), password.getText().toString());
+                Intent i = new Intent(this, ChatsListActivity.class);
+                startActivity(i);
             } catch (InterruptedException e) {
                 Log.d("Log-in-logging","GOT AN EXCEPTION");
                 e.printStackTrace();
-            }
+            }*/
         });
         toRegisterButton.setOnClickListener(v -> {
             Intent i = new Intent(this, RegisterActivity.class);

@@ -21,7 +21,7 @@ public class Chat {
     public ArrayList<Message> getMessages() {
         return messages;
     }
-    private Message getLastMessage() {
+    public Message getLastMessage() {
         if (this.messages.size() != 0) {
             return this.messages.get(this.messages.size() - 1);
         }

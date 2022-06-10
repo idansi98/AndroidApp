@@ -23,4 +23,7 @@
     <string name="not_registered_click_here">Not registered? Click here</string>
     <string name="usernametext">UserName</string>
     <string name="write_message">Write message...</string>
+    <string name="user_name">Username</string>
+    <string name="lastmessage">LastMessage</string>
+    <string name="datetime">DateTime</string>
 </resources>

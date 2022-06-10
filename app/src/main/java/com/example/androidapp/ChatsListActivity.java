@@ -2,6 +2,8 @@ package com.example.androidapp;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -39,14 +41,21 @@ public class ChatsListActivity extends AppCompatActivity {
 
 
         createNotificationChannel();
-        
+
+        // create a pending intent
+        Intent intent = new Intent(this,ChatsListActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,1,intent,0);
         // create a notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Channel_ID)
                 .setSmallIcon(R.drawable.logo)
                 .setContentText("Title!!")
                 .setContentText("NOTIFICATION WOO")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("LONG TEXT LONG TEXT LONG TEXT LONG TEXT LONG TEXT LONG TEXT LONG TEXT LONG TEXT"))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
         int notificationID = 1;
         notificationManager.notify(notificationID,builder.build());

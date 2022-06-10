@@ -9,9 +9,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -62,22 +60,18 @@ public class LoginActivity extends AppCompatActivity {
                 /* Payload support */
                 con.setDoOutput(true);
                 DataOutputStream out = new DataOutputStream(con.getOutputStream());
-                out.writeBytes("{\"username\":\""+userName+"\",\"password\":\""+password+"\"}");
-                Log.d("Fetch_Login", "{\"username\":\""+userName+"\",\"password\":\""+password+"\"}");
+                out.writeBytes("{\"username\":\""+userName.getText().toString()+"\"," +
+                        "\"password\":\""+password.getText().toString()+"\"}");
+                Log.d("Fetch_Login", "{\"username\":\""+userName.getText().toString()
+                        +"\",\"password\":\""+password.getText().toString()+"\"}");
                 out.flush();
                 out.close();
 
                 int status = con.getResponseCode();
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputLine;
-                StringBuilder content = new StringBuilder();
-                while ((inputLine = in.readLine()) != null) {
-                    content.append(inputLine);
-                }
-                in.close();
                 con.disconnect();
                 login_status =  (status >= 200 && status < 300);
-                Log.d("Login_Logging", "Async method finished");
+                Log.d("Login_Logging", "Async method finished, login_status is " +
+                        status);
                 return "Maybe?";
             }
             catch (Exception e) {

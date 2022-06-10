@@ -69,8 +69,8 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.View
         if (chats != null) {
             final Chat current = chats.get(position);
             viewHolder.userName.setText(current.getUserName());
-            viewHolder.profileImage.setImageResource(R.drawable.defaultp);
-            viewHolder.dateTime.setText(current.getLastMessage().getText());
+            viewHolder.profileImage.setImageResource(R.drawable.logo);
+            viewHolder.dateTime.setText("HEYYYY");
         }
     }
 

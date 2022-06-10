@@ -8,12 +8,19 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
+import com.example.androidapp.classes.AppDB;
+import com.example.androidapp.classes.User;
+import com.example.androidapp.classes.UserDao;
 
 import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
+    private AppDB db;
+    private UserDao userDao;
     EditText userName, password;
     Button loginButton, toRegisterButton;
     boolean login_status;
@@ -21,22 +28,29 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "OutDB")
+                .allowMainThreadQueries().build();
+        userDao = db.userDao();
         login_status = false;
         userName = findViewById(R.id.editTextTextPersonName);
         password = findViewById(R.id.editTextTextPassword);
         loginButton = findViewById(R.id.loginButton);
         toRegisterButton = findViewById(R.id.toRegButton);
-        loginButton.setOnClickListener(v -> {
+        //if logged in already -> go to chats
+        if(userDao.index().size()!=0) {
             Intent i = new Intent(this, ChatsListActivity.class);
             startActivity(i);
-            /*try {
+        }
+        loginButton.setOnClickListener(v -> {
+//            Intent i = new Intent(this, ChatsListActivity.class);
+//            startActivity(i);
+            try {
                 login(userName.getText().toString(), password.getText().toString());
-                Intent i = new Intent(this, ChatsListActivity.class);
-                startActivity(i);
             } catch (InterruptedException e) {
-                Log.d("Log-in-logging","GOT AN EXCEPTION");
+                Log.d("Login_Logging","GOT AN EXCEPTION");
                 e.printStackTrace();
-            }*/
+            }
         });
         toRegisterButton.setOnClickListener(v -> {
             Intent i = new Intent(this, RegisterActivity.class);
@@ -87,10 +101,15 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Log.d("Login_Logging", "On post-execute");
+            // assuming we are logging in ONLY if no user is set in DAO
             if(login_status) {
+                // insert the current user -> display name isn't updated yet!
+                userDao.insert(new User(1,userName.getText().toString(),userName.getText().toString(),password.getText().toString()));
                 Log.d("Login_Logging", "Entered logging clause");
-                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent i = new Intent(LoginActivity.this, ChatsListActivity.class);
                 startActivity(i);
+            } else {
+                //something
             }
         }
 

@@ -1,55 +1,66 @@
 package com.example.androidapp.classes;
 
-import java.util.ArrayList;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
 public class User {
-    private final String userName;
-    private final String displayName;
-    private final String password;
-    private final String defaultServerAdr;
-    private final ArrayList<Chat> chats;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    private String userName;
+    private String displayName;
+    private String password;
+    private String defaultServerAdr;
 
-    public User(String userName, String displayName, String password) {
+    public User(int id, String userName, String displayName, String password) {
+        this.id = id;
         this.userName = userName;
         this.displayName = displayName;
         this.password = password;
-        this.chats = new ArrayList<Chat>();
         this.defaultServerAdr =  "10.0.2.2";
     }
 
-    private void addChat(Chat chat) {
-        chats.add(chat);
+
+    public User() {
     }
 
-    private Chat searchChat(String userName) {
-        for (Chat chat: this.chats) {
-            if (chat.getUserName() == userName) {
-                return chat;
-            }
-        }
-        return null;
-    }
     public String getUserName() {
         return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getDefaultServerAdr() {
         return defaultServerAdr;
     }
 
-    public ArrayList<Chat> getChats() {
-        return chats;
+    public void setDefaultServerAdr(String defaultServerAdr) {
+        this.defaultServerAdr = defaultServerAdr;
     }
-/*
-    private void sendMessage(String to, String text) {
-    }*/
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

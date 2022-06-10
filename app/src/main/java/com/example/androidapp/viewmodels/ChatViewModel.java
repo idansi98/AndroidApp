@@ -10,7 +10,9 @@
 //public class ChatViewModel extends ViewModel {
 //    private ChatsRepository mRepository;
 //
+//    // maybe MutableLiveData?
 //    private LiveData<List<Chat>> chats;
+//
 //    public ChatViewModel() {
 //        mRepository = new ChatsRepository();
 //        chats = mRepository.getAll();

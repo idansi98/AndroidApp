@@ -16,41 +16,38 @@
         android:theme="@style/Theme.AndroidApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <service
+            android:name=".ChatService"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".ChatsListActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
+
         <activity
             android:name=".ChatActivity"
             android:exported="false" />
-        <!--
-<activity&ndash;&gt;
-&lt;!&ndash;            android:name=".ui.login.LoginActivity"&ndash;&gt;
-&lt;!&ndash;            android:exported="false"&ndash;&gt;
-&lt;!&ndash;            android:label="@string/title_activity_login" />
-        -->
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
-
-        <service
-            android:name=".MyService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
 
         <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

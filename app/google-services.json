@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "829544008457",
-    "project_id": "androidapp-81b32",
-    "storage_bucket": "androidapp-81b32.appspot.com"
+    "project_number": "512734137835",
+    "project_id": "marak-teimani",
+    "storage_bucket": "marak-teimani.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:829544008457:android:35c488c95a6f2dfbd261d8",
+        "mobilesdk_app_id": "1:512734137835:android:3ee3daeca4ab19aa3f1dae",
         "android_client_info": {
           "package_name": "com.example.androidapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "829544008457-r8c1ga7lp2peigdlcd6n37s4ncdrbms2.apps.googleusercontent.com",
+          "client_id": "512734137835-9fkhupjv5d9e7jg2bupmoaq7m8jn8997.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCdfR2-s1yL4eeBDII9Dyh92uoDzQz1bfk"
+          "current_key": "AIzaSyBvV5HQWsoS43VzamwgtZGzpFfILL-6oSc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "829544008457-r8c1ga7lp2peigdlcd6n37s4ncdrbms2.apps.googleusercontent.com",
+              "client_id": "512734137835-9fkhupjv5d9e7jg2bupmoaq7m8jn8997.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

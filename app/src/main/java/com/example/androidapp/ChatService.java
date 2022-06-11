@@ -32,6 +32,7 @@ public class ChatService extends FirebaseMessagingService {
         String messageBody = message.getNotification().getBody();
         Log.d("Firebase_Logging", "Got a message from " +contactDisplayName + "\nContents: " + messageBody);
         makeNotification(contactDisplayName, messageBody);
+        //TODO: request user to update his DB
 
     }
 
@@ -39,8 +40,8 @@ public class ChatService extends FirebaseMessagingService {
         notificationManager = NotificationManagerCompat.from(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // idk if check for version is needed
-            CharSequence name = "Hey";
-            String description = "DESC";
+            CharSequence name = "ContactsNotification";
+            String description = "Contains all the new messages from the app";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(Channel_ID, name, importance);
             channel.setDescription(description);
@@ -53,19 +54,21 @@ public class ChatService extends FirebaseMessagingService {
 
     private void makeNotification(String contactDisplayName, String message) {
         // create a pending intent
-        Intent intent = new Intent(this,ChatsListActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,1,intent,0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Intent intent = new Intent(this,ChatsListActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,1,intent,PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Channel_ID)
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle(contactDisplayName)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(message))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-        int notificationID = 1;
-        notificationManager.notify(notificationID,builder.build());
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Channel_ID)
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle(contactDisplayName)
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(message))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+            int notificationID = contactDisplayName.hashCode();
+            notificationManager.notify(notificationID,builder.build());
+        }
     }
 
 }

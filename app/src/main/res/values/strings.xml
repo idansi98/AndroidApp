@@ -26,4 +26,5 @@
     <string name="user_name">Username</string>
     <string name="lastmessage">LastMessage</string>
     <string name="datetime">DateTime</string>
+    <string name="BaseUrl">http://10.0.2.2:25565/api/</string>
 </resources>

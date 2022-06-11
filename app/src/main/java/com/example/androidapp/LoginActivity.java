@@ -57,6 +57,28 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(i);
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isLoggedAlready()) {
+            Intent i = new Intent(LoginActivity.this, ChatsListActivity.class);
+            startActivity(i);
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(isLoggedAlready()) {
+            Intent i = new Intent(LoginActivity.this, ChatsListActivity.class);
+            startActivity(i);
+        }
+    }
+
+    private boolean isLoggedAlready() {
+        return (userDao.index().size() >0);
+    }
     private void login (String userName, String password) throws InterruptedException {
         Log.d("Login_Logging", "Trying to log in");
         LoggingTask task = new LoggingTask();

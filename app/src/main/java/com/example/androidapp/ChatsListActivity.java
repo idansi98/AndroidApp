@@ -6,24 +6,32 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.example.androidapp.adapters.ChatsListAdapter;
-import com.example.androidapp.classes.Chat;
+import com.example.androidapp.api.ContactApi;
+import com.example.androidapp.classes.AppDB;
+import com.example.androidapp.classes.ChatDao;
+import com.example.androidapp.classes.UserDao;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ChatsListActivity extends AppCompatActivity {
-
-//    private ChatViewModel chatViewModel;
+    private AppDB db;
+    private UserDao userDao;
+    private ChatDao chatDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats_list);
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "OurDB")
+                .allowMainThreadQueries().build();
+        userDao = db.userDao();
+        chatDao = db.chatDao();
+
 
         // get a firebase token
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatsListActivity.this, new OnSuccessListener<InstanceIdResult>() {
@@ -38,20 +46,15 @@ public class ChatsListActivity extends AppCompatActivity {
         final ChatsListAdapter adapter = new ChatsListAdapter(this);
         chatsList.setAdapter(adapter);
         chatsList.setLayoutManager(new LinearLayoutManager(this));
-
-        List<Chat> chats = new ArrayList<>();
-        chats.add(new Chat(1, "alice", "Alice", "x"));
-        chats.add(new Chat(2, "bob", "Bob", "x"));
-        chats.add(new Chat(3, "charlie", "Charlie", "x"));
-        adapter.setChats(chats);
+        ContactApi contactApi = new ContactApi(userDao, chatDao);
+        Thread thread = new Thread(){
+            public void run(){
+                contactApi.get();
+            }
+        };
+        thread.start();
+        adapter.setChats(chatDao.index());
     }
-//        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-//
-//        chatViewModel.get().observe(this, new Observer<List<Chat>>() {
-//            @Override
-//            public void onChanged(List<Chat> chats) {
-//                adapter.setChats(chats);
-//            }
-//        });
+
 
 }

@@ -2,13 +2,16 @@ package com.example.androidapp.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidapp.ChatActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.classes.Chat;
 
@@ -20,18 +23,22 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
         private final TextView userName;
         private final TextView lastMessage;
         private final TextView dateTime;
+        private final LinearLayout container;
 
         private ChatViewHolder(View view) {
             super(view);
             this.userName = view.findViewById(R.id.username);
             this.lastMessage = view.findViewById(R.id.lastmessage);
             this.dateTime = view.findViewById(R.id.datetime);
+            this.container = view.findViewById(R.id.linearLayout2);
         }
     }
     private final LayoutInflater mInflater;
     private List<Chat> chats;
+    private final Context context;
 
     public ChatsListAdapter(Context context) {
+        this.context = context;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -45,9 +52,15 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
     public void onBindViewHolder(ChatViewHolder holder, int position) {
         if (chats != null) {
             final Chat current = chats.get(position);
-            holder.userName.setText(current.getUserName());
+            String userName = current.getUserName();
+            holder.userName.setText(userName);
             holder.lastMessage.setText("TEMPORARY");
             holder.dateTime.setText("TEMPORARY");
+            holder.container.setOnClickListener(v ->  {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("username",userName);
+                context.startActivity(intent);
+            });
         }
     }
 

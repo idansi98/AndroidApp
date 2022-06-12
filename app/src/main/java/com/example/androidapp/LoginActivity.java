@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "OurDB")
-                .allowMainThreadQueries().build();
+                .allowMainThreadQueries().fallbackToDestructiveMigration().build();
         userDao = db.userDao();
         login_status = false;
         userName = findViewById(R.id.editTextTextPersonName);

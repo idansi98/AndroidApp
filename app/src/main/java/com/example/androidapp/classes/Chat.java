@@ -53,4 +53,6 @@ public class Chat {
     public void setId(int id) {
         this.id = id;
     }
+
+
 }

@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidapp.ChatActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.classes.Chat;
+import com.example.androidapp.classes.Message;
+import com.example.androidapp.classes.MessageDao;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
     private final LayoutInflater mInflater;
     private List<Chat> chats;
     private final Context context;
+    private MessageDao messageDao;
 
     public ChatsListAdapter(Context context) {
         this.context = context;
@@ -54,8 +57,16 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
             final Chat current = chats.get(position);
             String userName = current.getUserName();
             holder.userName.setText(userName);
-            holder.lastMessage.setText("TEMPORARY");
-            holder.dateTime.setText("TEMPORARY");
+
+            List<Message> messages = messageDao.get(userName);
+            if (messages.size() > 0) {
+                Message lastMessage = messages.get(messages.size()-1);
+                holder.lastMessage.setText(lastMessage.getText());
+                holder.dateTime.setText("Time in ms: " +lastMessage.getTimeInMS());
+            } else {
+                holder.lastMessage.setText("");
+                holder.dateTime.setText("");
+            }
             holder.container.setOnClickListener(v ->  {
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("username",userName);
@@ -68,6 +79,13 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
         chats = s;
         notifyDataSetChanged();
     }
+
+    public void setMessageDao(MessageDao messageDao) {
+        this.messageDao = messageDao;
+        notifyDataSetChanged();
+    }
+
+
 
     @Override
     public int getItemCount() {

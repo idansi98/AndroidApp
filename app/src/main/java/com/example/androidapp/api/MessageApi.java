@@ -9,8 +9,10 @@ import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.classes.Chat;
 import com.example.androidapp.classes.ChatDao;
+import com.example.androidapp.classes.Message;
 import com.example.androidapp.classes.MessageDao;
 import com.example.androidapp.classes.ServerContact;
+import com.example.androidapp.classes.ServerMessage;
 import com.example.androidapp.classes.User;
 import com.example.androidapp.classes.UserDao;
 
@@ -31,22 +33,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ContactApi  {
+public class MessageApi {
     private MutableLiveData<List<ServerContact>> contactListData;
-    private ChatDao chatDao;
     private UserDao userDao;
+    private ChatDao chatDao;
     private MessageDao messageDao;
-    MessageApi messageApi;
+
     Retrofit retrofit;
-    ContactServiceApi contactServiceApi;
+    MessageServiceApi messageServiceApi;
     private final OkHttpClient client;
 
-    public ContactApi(UserDao userDao , ChatDao chatDao, MessageDao messageDao) {
-//        this.contactListData = contactListData;
-        this.chatDao = chatDao;
+    public MessageApi(UserDao userDao, ChatDao chatDao ,MessageDao messageDao) {
         this.userDao = userDao;
+        this.chatDao = chatDao;
         this.messageDao = messageDao;
-        messageApi= new MessageApi(userDao,chatDao, messageDao);
 
         // init cookie manager
         CookieHandler cookieHandler = new CookieManager();
@@ -67,47 +67,49 @@ public class ContactApi  {
                 .client(client)
                 .build();
 
-        contactServiceApi = retrofit.create(ContactServiceApi.class);
+        messageServiceApi = retrofit.create(MessageServiceApi.class);
     }
 
-    public void get() {
+    public void get(String contactID) {
+        Chat chat = chatDao.get(contactID);
+        if (chat == null) {
+            Log.d("API_LOGGING", "Didn't find contact");
+            return;
+        }
         // login using the new session
         tryLogin();
-        // get all the contacts
-        Call<List<ServerContact>> call = contactServiceApi.getServerContacts();
-        call.enqueue(new Callback<List<ServerContact>>() {
+        // get all the messages of the contact
+        Call<List<ServerMessage>> call = messageServiceApi.getAllMessages(contactID);
+        call.enqueue(new Callback<List<ServerMessage>>() {
             @Override
-            public void onResponse(@NonNull Call<List<ServerContact>> call, @NonNull Response<List<ServerContact>> response) {
-                // adds all the contacts to the DB
-                List<ServerContact> contacts = response.body();
-                assert contacts != null;
-                for (ServerContact contact : contacts) {
-                    Chat chat = new Chat();
-                    chat.setUserName(contact.getId());
-                    chat.setDisplayName(contact.getName());
-                    chat.setServerAdr(contact.getServer());
-                    if (chatDao.get(chat.getUserName()) == null) {
-                        chatDao.insert(chat);
-                    } else {
-                        chatDao.update(chat);
-                    }
-
-                }
-                // calls the api to get all the messages for each contact
-                Thread thread = new Thread(){
-                    public void run(){
-                        for (ServerContact contact : contacts) {
-                            messageApi.get(contact.getId());
+            public void onResponse(@NonNull Call<List<ServerMessage>> call, @NonNull Response<List<ServerMessage>> response) {
+                List<ServerMessage> messages = response.body();
+                assert messages != null;
+                List<Message> pastMessages = messageDao.get(chat.getUserName());
+                for (ServerMessage message : messages) {
+                    long timeCalculated = convertToTimeFormat(message.getCreated());
+                    boolean toUpdate = false;
+                    Message convertedMessage = new Message(message.getId(),chat.getUserName(),message.getContent(), timeCalculated, message.getSent());
+                    for (Message pastMessage: pastMessages) {
+                        if (pastMessage.getId().equals(message.getId())) {
+                            toUpdate = true;
+                            break;
                         }
                     }
-                };
-                thread.start();
+                    if (toUpdate) {
+                        messageDao.update(convertedMessage);
+                    } else {
+                        messageDao.insert(convertedMessage);
+                    }
+
+
+                }
 
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<ServerContact>> contact, @NonNull Throwable t){
-                Log.d("API_LOGGING", "Failure / no contacts\t Error code: " + t.getMessage());
+            public void onFailure(@NonNull Call<List<ServerMessage>> contact, @NonNull Throwable t){
+                Log.d("API_LOGGING", "Failure / no messages\t Error code: " + t.getMessage());
             }
         });
     }
@@ -132,6 +134,21 @@ public class ContactApi  {
         } catch (IOException ex) {
             Log.e("API_LOGGING",ex.getMessage());
         }
+
+    }
+
+    private long convertToTimeFormat(String str) {
+        return 0;
+//        try {
+//            // TODO: fix the time thing
+////            String pattern = "yyyy-MM-ddTHH:mm:ss.fffffff";
+////            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+////            Date date = simpleDateFormat.parse(str);
+////            return date.getTime();
+//        } catch (Exception ex) {
+//            Log.d("API_LOGGING","Exception at converting time "+ ex.getMessage());
+//            return 0;
+//        }
 
     }
 }

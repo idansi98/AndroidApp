@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         register_status = false;
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "OurDB")
-                .allowMainThreadQueries().build();
+                .allowMainThreadQueries().fallbackToDestructiveMigration().build();
         userDao = db.userDao();
         userName = findViewById(R.id.editTextTextPersonName);
         displayName = findViewById(R.id.editTextTextDisplayName);

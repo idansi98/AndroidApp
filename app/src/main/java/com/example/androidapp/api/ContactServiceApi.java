@@ -20,5 +20,5 @@ public interface ContactServiceApi {
     Call<Void> createServerContact(@Body ServerContact serverContact);
 
     @DELETE("contacts/{id}")
-    Call<Void> deleteServerContact(@Path("id") int id);
+    Call<Void> deleteServerContact(@Path("id") String id);
 }

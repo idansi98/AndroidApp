@@ -8,9 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.androidapp.ChatActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.classes.Chat;

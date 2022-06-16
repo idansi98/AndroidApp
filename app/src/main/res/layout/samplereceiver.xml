@@ -20,7 +20,7 @@
         android:layout_constraintStart_toStartOf="@+id/guideline2"
         android:layout_margin="8dp"
         android:layout_marginStart="4dp"
-        android:inputType="textMultiLine"
+        android:inputType="textLongMessage|textMultiLine"
         android:maxWidth="270dp"
         android:minWidth="50dp"
         android:text="TextView"
@@ -46,5 +46,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="12dp" />
+        app:layout_constraintGuide_begin="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,7 +37,8 @@ public class ChatsListActivity extends AppCompatActivity {
 
 
         // get a firebase token
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatsListActivity.this, new OnSuccessListener<InstanceIdResult>() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                ChatsListActivity.this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String newToken = instanceIdResult.getToken();

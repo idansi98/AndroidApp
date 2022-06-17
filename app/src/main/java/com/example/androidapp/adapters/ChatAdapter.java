@@ -15,6 +15,8 @@ import com.example.androidapp.classes.Chat;
 import com.example.androidapp.classes.Message;
 import com.example.androidapp.classes.MessageDao;
 
+import java.util.List;
+
 public class ChatAdapter extends RecyclerView.Adapter {
 
     class ReceiverViewHolder extends RecyclerView.ViewHolder {
@@ -39,19 +41,66 @@ public class ChatAdapter extends RecyclerView.Adapter {
         }
     }
 
+    private final LayoutInflater mInflater;
+    private List<Message> messages;
+    private final Context context;
+    private MessageDao messageDao;
+    private int senderViewType = 1;
+    private int receiverViewType = 2;
+
+    public ChatAdapter(Context context) {
+        this.context = context;
+        mInflater = LayoutInflater.from(context);
+    }
     @NonNull
     @Override
-    public ChatAdapter.MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == senderViewType) {
+            View viewItem =  mInflater.inflate(R.layout.samplesender, parent, false);
+            return new SenderViewHolder(viewItem);
+        }
+        else {
+            View viewItem =  mInflater.inflate(R.layout.samplereceiver, parent, false);
+            return new ReceiverViewHolder(viewItem);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChatAdapter.MessageViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (messages != null) {
+            Message message = messages.get(position);
+            if (holder.getClass() == SenderViewHolder.class) {
+                ((SenderViewHolder)holder).senderText.setText(message.getText());
+                ((SenderViewHolder)holder).senderTime.setText((int) message.getTimeInMS());
+            }
+            else {
+                ((ReceiverViewHolder)holder).receiverText.setText(message.getText());
+                ((ReceiverViewHolder)holder).receiverTime.setText((int) message.getTimeInMS());
+            }
+        }
     }
+
+    public void setMessages(List<Message> m) {
+        this.messages = m;
+        notifyDataSetChanged();
+    }
+
+    public void setMessageDao(MessageDao messageDao) {
+        this.messageDao = messageDao;
+        notifyDataSetChanged();
+    }
+
+
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (messages != null) {
+            return messages.size();
+        }
+        else return 1;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
     }
 }

@@ -14,8 +14,7 @@
         android:layout_height="76dp"
         android:background="#72cad5"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        />
+        android:theme="?attr/actionBarTheme" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,10 +26,10 @@
             android:layout_height="0dp"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="89dp"
+            android:clickable="true"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:clickable="true"
             app:srcCompat="@drawable/arrowleft36" />
 
         <TextView
@@ -44,6 +43,8 @@
             app:layout_constraintHorizontal_bias="0.308"
             app:layout_constraintStart_toEndOf="@+id/backArrow"
             app:layout_constraintTop_toTopOf="@+id/backArrow" />
+
+
 
         <TextView
             android:id="@+id/textView2"

@@ -10,11 +10,11 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatReclarView"
+        android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:layout_above="@id/linear"/>
+        android:layout_above="@id/linear"
+        android:layout_below="@id/toolbar" />
 
     <LinearLayout
         android:id="@+id/linear"

@@ -22,4 +22,6 @@ public interface ChatDao {
     void update(Chat... chats);
     @Delete
     void delete(Chat... chats);
+    @Query("DELETE FROM chat")
+    void resetTable();
 }

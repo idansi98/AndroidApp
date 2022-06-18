@@ -72,7 +72,12 @@ public class ContactApi  {
 
     public void get() {
         // login using the new session
-        tryLogin();
+        boolean hasError = tryLogin();
+        if (hasError) {
+            return;
+        }
+        chatDao.resetTable();
+        messageDao.resetTable();
         // get all the contacts
         Call<List<ServerContact>> call = contactServiceApi.getServerContacts();
         call.enqueue(new Callback<List<ServerContact>>() {
@@ -113,7 +118,7 @@ public class ContactApi  {
     }
 
     // this method can be used in other API's
-    private void tryLogin()  {
+    private boolean tryLogin()  {
         try {
             User user = userDao.index().get(0);
             String json = "{\"username\":\""+user.getUserName()+"\",\"password\":\""+user.getPassword()+"\"}";
@@ -129,8 +134,13 @@ public class ContactApi  {
             okhttp3.Call call = client.newCall(request);
             okhttp3.Response response = call.execute();
             Log.d("API_LOGGING","response body:" + response.body().string());
+            if (response.isSuccessful()) {
+                return false;
+            }
+            return true;
         } catch (IOException ex) {
             Log.e("API_LOGGING",ex.getMessage());
+            return true;
         }
 
     }

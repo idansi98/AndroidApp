@@ -95,6 +95,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
         else return 1;
     }
 
+
     public List<Chat> getChats() {
         return chats;
     }

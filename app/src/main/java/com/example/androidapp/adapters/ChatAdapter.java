@@ -1,17 +1,15 @@
 package com.example.androidapp.adapters;
+
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.androidapp.ChatActivity;
+
 import com.example.androidapp.R;
-import com.example.androidapp.classes.Chat;
 import com.example.androidapp.classes.Message;
 import com.example.androidapp.classes.MessageDao;
 
@@ -47,6 +45,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
     private MessageDao messageDao;
     private int senderViewType = 1;
     private int receiverViewType = 2;
+    private String username;
 
     public ChatAdapter(Context context) {
         this.context = context;
@@ -71,11 +70,11 @@ public class ChatAdapter extends RecyclerView.Adapter {
             Message message = messages.get(position);
             if (holder.getClass() == SenderViewHolder.class) {
                 ((SenderViewHolder)holder).senderText.setText(message.getText());
-                ((SenderViewHolder)holder).senderTime.setText((int) message.getTimeInMS());
+                ((SenderViewHolder)holder).senderTime.setText("" +  message.getTimeInMS());
             }
             else {
                 ((ReceiverViewHolder)holder).receiverText.setText(message.getText());
-                ((ReceiverViewHolder)holder).receiverTime.setText((int) message.getTimeInMS());
+                ((ReceiverViewHolder)holder).receiverTime.setText("" + message.getTimeInMS());
             }
         }
     }
@@ -87,6 +86,11 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     public void setMessageDao(MessageDao messageDao) {
         this.messageDao = messageDao;
+        notifyDataSetChanged();
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
         notifyDataSetChanged();
     }
 

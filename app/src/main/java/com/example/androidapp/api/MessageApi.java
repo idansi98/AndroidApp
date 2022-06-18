@@ -2,7 +2,6 @@ package com.example.androidapp.api;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.MyApplication;
@@ -28,7 +27,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -80,16 +78,15 @@ public class MessageApi {
         tryLogin();
         // get all the messages of the contact
         Call<List<ServerMessage>> call = messageServiceApi.getAllMessages(contactID);
-        call.enqueue(new Callback<List<ServerMessage>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<ServerMessage>> call, @NonNull Response<List<ServerMessage>> response) {
-                List<ServerMessage> messages = response.body();
-                assert messages != null;
+        try {
+            Response<List<ServerMessage>> response = call.execute();
+            List<ServerMessage> messages = response.body();
+            assert messages != null;
                 List<Message> pastMessages = messageDao.get(chat.getUserName());
                 for (ServerMessage message : messages) {
                     long timeCalculated = convertToTimeFormat(message.getCreated());
                     boolean toUpdate = false;
-                    Message convertedMessage = new Message(message.getId(),chat.getUserName(),message.getContent(), timeCalculated, message.getSent());
+                    Message convertedMessage = new Message(message.getId()+chat.getUserName(),chat.getUserName(),message.getContent(), timeCalculated, message.getSent());
                     for (Message pastMessage: pastMessages) {
                         if (pastMessage.getId().equals(message.getId())) {
                             toUpdate = true;
@@ -101,17 +98,10 @@ public class MessageApi {
                     } else {
                         messageDao.insert(convertedMessage);
                     }
-
-
                 }
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<ServerMessage>> contact, @NonNull Throwable t){
-                Log.d("API_LOGGING", "Failure / no messages\t Error code: " + t.getMessage());
-            }
-        });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     // this method can be used in other API's

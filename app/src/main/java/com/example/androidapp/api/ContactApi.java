@@ -2,7 +2,6 @@ package com.example.androidapp.api;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.MyApplication;
@@ -26,7 +25,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -76,45 +74,31 @@ public class ContactApi  {
         if (hasError) {
             return;
         }
-        chatDao.resetTable();
         messageDao.resetTable();
-        // get all the contacts
+        chatDao.resetTable();
+        // get all the contacts in sync
         Call<List<ServerContact>> call = contactServiceApi.getServerContacts();
-        call.enqueue(new Callback<List<ServerContact>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<ServerContact>> call, @NonNull Response<List<ServerContact>> response) {
-                // adds all the contacts to the DB
-                List<ServerContact> contacts = response.body();
-                assert contacts != null;
-                for (ServerContact contact : contacts) {
-                    Chat chat = new Chat();
-                    chat.setUserName(contact.getId());
-                    chat.setDisplayName(contact.getName());
-                    chat.setServerAdr(contact.getServer());
-                    if (chatDao.get(chat.getUserName()) == null) {
-                        chatDao.insert(chat);
-                    } else {
-                        chatDao.update(chat);
-                    }
-
+        try {
+            Response<List<ServerContact>> response = call.execute();
+            List<ServerContact> contacts = response.body();
+            assert contacts != null;
+            for (ServerContact contact : contacts) {
+                Chat chat = new Chat();
+                chat.setUserName(contact.getId());
+                chat.setDisplayName(contact.getName());
+                chat.setServerAdr(contact.getServer());
+                if (chatDao.get(chat.getUserName()) == null) {
+                    chatDao.insert(chat);
+                } else {
+                    chatDao.update(chat);
                 }
-                // calls the api to get all the messages for each contact
-                Thread thread = new Thread(){
-                    public void run(){
-                        for (ServerContact contact : contacts) {
-                            messageApi.get(contact.getId());
-                        }
-                    }
-                };
-                thread.start();
-
             }
-
-            @Override
-            public void onFailure(@NonNull Call<List<ServerContact>> contact, @NonNull Throwable t){
-                Log.d("API_LOGGING", "Failure / no contacts\t Error code: " + t.getMessage());
+            for (ServerContact contact : contacts) {
+                messageApi.get(contact.getId());
             }
-        });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     // this method can be used in other API's

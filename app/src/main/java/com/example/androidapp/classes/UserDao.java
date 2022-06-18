@@ -18,4 +18,6 @@ public interface UserDao {
     void update(User... users);
     @Delete
     void delete(User... users);
+    @Query("DELETE FROM user")
+    void resetTable();
 }

@@ -1,6 +1,8 @@
 package com.example.androidapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.example.androidapp.adapters.ChatAdapter;
-import com.example.androidapp.adapters.ChatsListAdapter;
 import com.example.androidapp.api.ContactApi;
 import com.example.androidapp.classes.AppDB;
 import com.example.androidapp.classes.ChatDao;
@@ -32,9 +33,11 @@ public class ChatActivity extends AppCompatActivity {
         chatDao = db.chatDao();
         messageDao = db.messageDao();
 
-
-
+        Intent thisIntent = getIntent();
+        String username = thisIntent.getStringExtra("username");
         RecyclerView chat = findViewById(R.id.chatRecyclerView);
+        TextView userNameView = findViewById(R.id.userName);
+        userNameView.setText(username);
         final ChatAdapter adapter = new ChatAdapter(this);
         chat.setAdapter(adapter);
         chat.setLayoutManager(new LinearLayoutManager(this));
@@ -46,6 +49,7 @@ public class ChatActivity extends AppCompatActivity {
         };
         thread.start();
         adapter.setMessageDao(messageDao);
-        adapter.setMessages(messageDao.index());
+        adapter.setUsername(username);
+        adapter.setMessages(messageDao.get(username));
     }
 }

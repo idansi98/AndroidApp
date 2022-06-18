@@ -12,10 +12,23 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chatsList"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/signOffButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="355dp"
+        android:layout_marginBottom="675dp"
+        android:clickable="true"
+        android:contentDescription="TODO"
+        android:focusable="true"
+        app:srcCompat="@android:drawable/ic_menu_add" />
 </RelativeLayout>

@@ -66,14 +66,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="150dp"
             android:layout_marginTop="201dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="228dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:text="10.0.2.2:25565"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.236"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/changeButton"

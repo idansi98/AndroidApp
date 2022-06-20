@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -101,7 +100,7 @@ public class ChatsListActivity extends AppCompatActivity {
         });
 
         RecyclerView chatsList = findViewById(R.id.chatsList);
-        ImageView signOffButton = findViewById(R.id.signOffButton);
+        FloatingActionButton signOffButton = findViewById(R.id.signOffButton);
 
         final ChatsListAdapter adapter = new ChatsListAdapter(this);
         chatsList.setAdapter(adapter);

@@ -1,11 +1,14 @@
 package com.example.androidapp;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -22,7 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     private AppDB db;
     private UserDao userDao;
     EditText userName, password;
-    Button loginButton, toRegisterButton, goToSettingsButton;
+    Button loginButton, toRegisterButton;
+    ImageView  goToSettingsButton;
     boolean login_status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(i);
         });
         goToSettingsButton.setOnClickListener(v -> {
-            Intent i = new Intent(this, SettingsActivity.class);
+            Intent i = new Intent(LoginActivity.this, SettingsActivity.class);
             Intent thisIntent = getIntent();
             if (thisIntent.hasExtra("server_adr")) {
                 String server_adr = thisIntent.getStringExtra("server_adr");

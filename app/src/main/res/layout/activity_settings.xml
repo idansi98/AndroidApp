@@ -9,25 +9,27 @@
     android:background="@drawable/gradient_register">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar2"
         android:layout_width="409dp"
         android:layout_height="76dp"
         android:background="#72cad5"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <ImageView
             android:id="@+id/backArrow"
-            android:layout_width="54dp"
-            android:layout_height="0dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginStart="12dp"
-            android:layout_marginBottom="89dp"
+            android:layout_marginTop="4dp"
             android:clickable="true"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/arrowleft36" />
@@ -36,55 +38,58 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="145dp"
             android:text="Settings"
-            android:textSize="50dp"
+            android:textSize="40dp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/serverId"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.308"
             app:layout_constraintStart_toEndOf="@+id/backArrow"
-            app:layout_constraintTop_toTopOf="@+id/backArrow" />
-
-
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="530dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="201dp"
             android:text="ServerId:"
             android:textSize="28dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backArrow"
-            app:layout_constraintVertical_bias="0.143" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/serverId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="201dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="228dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/defaultServerAdr"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.205"
-            app:layout_constraintStart_toEndOf="@+id/textView2" />
+            android:text="Name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.236"/>
 
         <Button
             android:id="@+id/changeButton"
-            android:layout_width="159dp"
-            android:layout_height="57dp"
+            android:layout_width="154dp"
+            android:layout_height="50dp"
             android:background="#233FEF"
             android:text="Change"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/serverId"
+            app:layout_constraintVertical_bias="0.425" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

@@ -11,7 +11,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar3">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chatsList"
@@ -19,20 +20,42 @@
             android:layout_height="match_parent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="409dp"
+        android:layout_height="76dp"
+        android:background="#72cad5"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <ImageView
         android:id="@+id/signOffButton"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="79dp"
+        android:layout_height="61dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="355dp"
-        android:layout_marginBottom="675dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="321dp"
+        android:layout_marginBottom="661dp"
         android:clickable="true"
-        android:contentDescription="TODO"
         android:focusable="true"
+        app:srcCompat="@drawable/logout" />
+
+    <ImageView
+        android:id="@+id/addcontact"
+        android:layout_width="79dp"
+        android:layout_height="61dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="322dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="647dp"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
 </RelativeLayout>

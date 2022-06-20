@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -43,9 +42,7 @@
         android:layout_marginBottom="665dp"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="visible"
-        app:srcCompat="@drawable/logout"
-        tools:visibility="visible" />
+        app:srcCompat="@drawable/logout" />
 
     <ImageView
         android:id="@+id/addContact"

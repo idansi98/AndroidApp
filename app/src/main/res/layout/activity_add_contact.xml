@@ -45,7 +45,6 @@
             android:text="Add Contact"
             android:textSize="40dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/serverId"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.308"
             app:layout_constraintStart_toEndOf="@+id/backArrow2"
@@ -55,16 +54,15 @@
             android:id="@+id/serverAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="264dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="ServerAddress:"
-            app:layout_constraintBottom_toBottomOf="@+id/changeButton"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/addContact2"
-            app:layout_constraintVertical_bias="0.524" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.383" />
 
         <EditText
             android:id="@+id/nickName"
@@ -80,6 +78,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.173" />
 
+
         <EditText
             android:id="@+id/userName1"
             android:layout_width="wrap_content"
@@ -92,7 +91,7 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.281" />
+            app:layout_constraintVertical_bias="0.276" />
 
         <Button
             android:id="@+id/addContactButton"

@@ -2,11 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.androidapp">
-
     <uses-permission android:name="android.permission.INTERNET" />
-
     <application
-        android:name=".MyApplication"
+
+    android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -42,9 +41,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <activity
-            android:name=".ChatsListActivity"
+        android:name=".ChatsListActivity"
             android:exported="true" />
         <activity
             android:name=".ChatActivity"
@@ -62,5 +60,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

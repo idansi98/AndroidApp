@@ -58,51 +58,48 @@ public class ChatsListActivity extends AppCompatActivity {
 
         // get a firebase token
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
-                ChatsListActivity.this, new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                String newToken = instanceIdResult.getToken();
-                Thread thread = new Thread(){
-                    public void run(){
-                        try {
-                            // cookie manager
-                            CookieHandler cookieHandler = new CookieManager();
+                ChatsListActivity.this, instanceIdResult -> {
+                    String newToken = instanceIdResult.getToken();
+                    Thread thread = new Thread(){
+                        public void run(){
+                            try {
+                                // cookie manager
+                                CookieHandler cookieHandler = new CookieManager();
 
-                            // make a new session
-                            OkHttpClient client = new OkHttpClient.Builder()
-                                    .cookieJar(new JavaNetCookieJar(cookieHandler))
-                                    .connectTimeout(15, TimeUnit.SECONDS)
-                                    .readTimeout(20, TimeUnit.SECONDS)
-                                    .writeTimeout(20, TimeUnit.SECONDS)
-                                    .retryOnConnectionFailure(true)
-                                    .build();
-                            tryLogin(client);
-                            String json = "\"" + newToken + "\"";
+                                // make a new session
+                                OkHttpClient client = new OkHttpClient.Builder()
+                                        .cookieJar(new JavaNetCookieJar(cookieHandler))
+                                        .connectTimeout(15, TimeUnit.SECONDS)
+                                        .readTimeout(20, TimeUnit.SECONDS)
+                                        .writeTimeout(20, TimeUnit.SECONDS)
+                                        .retryOnConnectionFailure(true)
+                                        .build();
+                                tryLogin(client);
+                                String json = "\"" + newToken + "\"";
 
-                            RequestBody body = RequestBody.create(
-                                    MediaType.parse("application/json"), json);
-                            Request request = new Request.Builder()
-                                    .url("http://"+userDao.index().get(0).getDefaultServerAdr()+"/api/firebase")
-                                    .post(body)
-                                    .build();
+                                RequestBody body = RequestBody.create(
+                                        MediaType.parse("application/json"), json);
+                                Request request = new Request.Builder()
+                                        .url("http://"+userDao.index().get(0).getDefaultServerAdr()+"/api/firebase")
+                                        .post(body)
+                                        .build();
 
-                            okhttp3.Call call = client.newCall(request);
-                            okhttp3.Response response = call.execute();
-                            Log.d("Firebase_Logging", "Firebase new id attempt: " + response.message() + response.code());
-                        } catch (IOException ex) {
-                            Log.d("Firebase_Logging", "Couldn't upload token: " + ex.getMessage());
+                                okhttp3.Call call = client.newCall(request);
+                                okhttp3.Response response = call.execute();
+                                Log.d("Firebase_Logging", "Firebase new id attempt: " + response.message() + response.code());
+                            } catch (IOException ex) {
+                                Log.d("Firebase_Logging", "Couldn't upload token: " + ex.getMessage());
+                            }
+
                         }
-
-                    }
-                };
-                thread.start();
-                Log.d("Firebase_Logging", "The token is " + newToken);
-            }
-        });
+                    };
+                    thread.start();
+                    Log.d("Firebase_Logging", "The token is " + newToken);
+                });
 
         RecyclerView chatsList = findViewById(R.id.chatsList);
         ImageView signOffButton = findViewById(R.id.signOffButton);
-
+        ImageView addContact = findViewById(R.id.addContact);
         final ChatsListAdapter adapter = new ChatsListAdapter(this);
         chatsList.setAdapter(adapter);
         chatsList.setLayoutManager(new LinearLayoutManager(this));
@@ -125,17 +122,18 @@ public class ChatsListActivity extends AppCompatActivity {
             task2.execute();
         });
         // signing off
-        signOffButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // reset the DB
-                messageDao.resetTable();
-                chatDao.resetTable();
-                userDao.resetTable();
-                // go to the main screen
-                Intent i = new Intent(ChatsListActivity.this, LoginActivity.class);
-                startActivity(i);
-            }
+        addContact.setOnClickListener(v -> {
+            Intent i = new Intent(this, AddContactActivity.class);
+            startActivity(i);
+        });
+        signOffButton.setOnClickListener(v -> {
+            // reset the DB
+            messageDao.resetTable();
+            chatDao.resetTable();
+            userDao.resetTable();
+            // go to the main screen
+            Intent i = new Intent(ChatsListActivity.this, LoginActivity.class);
+            startActivity(i);
         });
 
     }

@@ -27,11 +27,13 @@
             android:id="@+id/backArrow2"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="4dp"
             android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.043"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.017"
             app:srcCompat="@drawable/arrowleft36" />
 
         <TextView
@@ -53,51 +55,50 @@
             android:id="@+id/serverAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="201dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="228dp"
+            android:layout_marginTop="264dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:text="ServerAddress:"
+            app:layout_constraintBottom_toBottomOf="@+id/changeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.236"/>
+            app:layout_constraintTop_toTopOf="@+id/addContact2"
+            app:layout_constraintVertical_bias="0.524" />
 
         <EditText
             android:id="@+id/nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="201dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="228dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="NickName:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.236"/>
+            app:layout_constraintVertical_bias="0.173" />
 
         <EditText
             android:id="@+id/userName1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="201dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="228dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="UserName:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.236"/>
+            app:layout_constraintVertical_bias="0.281" />
 
         <Button
-            android:id="@+id/changeButton"
+            android:id="@+id/addContactButton"
             android:layout_width="154dp"
             android:layout_height="50dp"
+            android:layout_marginBottom="296dp"
             android:background="#233FEF"
             android:text="Change"
             app:backgroundTint="@null"
@@ -105,8 +106,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/serverId"
-            app:layout_constraintVertical_bias="0.425" />
+            app:layout_constraintTop_toBottomOf="@+id/serverAddress"
+            app:layout_constraintVertical_bias="0.944" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

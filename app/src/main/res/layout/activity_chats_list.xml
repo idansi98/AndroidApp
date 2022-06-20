@@ -23,39 +23,39 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"
         android:layout_width="409dp"
-        android:layout_height="76dp"
+        android:layout_height="70dp"
         android:background="#72cad5"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
     <ImageView
         android:id="@+id/signOffButton"
-        android:layout_width="79dp"
-        android:layout_height="61dp"
+        android:layout_width="wrap_content"
+        android:layout_height="57dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="9dp"
-        android:layout_marginEnd="321dp"
-        android:layout_marginBottom="661dp"
+        android:layout_marginEnd="332dp"
+        android:layout_marginBottom="665dp"
         android:clickable="true"
         android:focusable="true"
         app:srcCompat="@drawable/logout" />
 
     <ImageView
-        android:id="@+id/addcontact"
+        android:id="@+id/addContact"
         android:layout_width="79dp"
-        android:layout_height="61dp"
+        android:layout_height="100dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="322dp"
+        android:layout_marginStart="323dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="9dp"
-        android:layout_marginBottom="647dp"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        android:layout_marginBottom="657dp"
+        app:srcCompat="@android:drawable/ic_menu_add"/>
 
 </RelativeLayout>

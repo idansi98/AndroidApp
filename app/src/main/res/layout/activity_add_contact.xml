@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
- xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
     android:background="@drawable/gradient_register">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
+        android:id="@+id/toolbar3"
         android:layout_width="409dp"
         android:layout_height="70dp"
         android:background="#72cad5"
@@ -24,7 +24,7 @@
 
 
         <ImageView
-            android:id="@+id/backArrow"
+            android:id="@+id/backArrow2"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginStart="12dp"
@@ -40,24 +40,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="145dp"
-            android:text="Settings"
+            android:text="Add Contact"
             android:textSize="40dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/serverId"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.308"
-            app:layout_constraintStart_toEndOf="@+id/backArrow"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="201dp"
-            android:text="ServerId:"
-            android:textSize="28dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/backArrow2"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -71,6 +60,36 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.236"/>
+
+        <EditText
+            android:id="@+id/nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="201dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="228dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="NickName:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.236"/>
+
+        <EditText
+            android:id="@+id/userName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="201dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="228dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="UserName:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.236"/>
@@ -89,7 +108,7 @@
             app:layout_constraintTop_toBottomOf="@+id/serverId"
             app:layout_constraintVertical_bias="0.425" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </RelativeLayout>

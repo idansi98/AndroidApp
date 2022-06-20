@@ -49,8 +49,6 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(i);
         }
         loginButton.setOnClickListener(v -> {
-//            Intent i = new Intent(this, ChatsListActivity.class);
-//            startActivity(i);
             try {
                 login(userName.getText().toString(), password.getText().toString());
             } catch (InterruptedException e) {

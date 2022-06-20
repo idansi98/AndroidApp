@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -137,6 +138,13 @@ public class ChatsListActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityCompat.finishAffinity(ChatsListActivity.this);
+    }
+
     private void tryLogin(OkHttpClient client)  {
         try {
             User user = userDao.index().get(0);
@@ -180,6 +188,7 @@ public class ChatsListActivity extends AppCompatActivity {
             adapter2.setChats(chatDao.index());
             layout.setRefreshing(false);
         }
+
 
         public void setAdapter(ChatsListAdapter adapter) {
             this.adapter2 = adapter;

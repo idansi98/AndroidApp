@@ -71,5 +71,13 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/goToSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="48dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

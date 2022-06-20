@@ -45,6 +45,11 @@ public class RegisterActivity extends AppCompatActivity {
         toLoginButton = findViewById(R.id.toLoginButton);
         toLoginButton.setOnClickListener(v -> {
             Intent i = new Intent(this, LoginActivity.class);
+            Intent thisIntent = getIntent();
+            if (thisIntent.hasExtra("server_adr")) {
+                String server_adr = thisIntent.getStringExtra("server_adr");
+                i.putExtra("server_adr",server_adr);
+            }
             startActivity(i);
         });
         registerButton.setOnClickListener(v -> {
@@ -100,7 +105,14 @@ public class RegisterActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             Log.d("Register_Logging", "Async method started running");
             try {
-                URL url = new URL("http://10.0.2.2:25565/api/register");
+                String urlString;
+                Intent thisIntent = getIntent();
+                if (thisIntent.hasExtra("server_adr")) {
+                    urlString = thisIntent.getStringExtra("server_adr");
+                } else {
+                    urlString = "10.0.2.2:25565";
+                }
+                URL url = new URL("http://"+urlString+"/api/register");
                 Log.d("Register_Logging", "Connecting to: " + url.toString());
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
@@ -135,8 +147,14 @@ public class RegisterActivity extends AppCompatActivity {
             Log.d("Register_Logging", "On post-execute");
             // assuming we are logging in ONLY if no user is set in DAO
             if(register_status) {
+                Intent thisIntent = getIntent();
+                if (thisIntent.hasExtra("server_adr")) {
+                    String server_adr = thisIntent.getStringExtra("server_adr");
+                    userDao.insert(new User(1,userName.getText().toString(),displayName.getText().toString(),password.getText().toString(),server_adr));
+                } else {
+                    userDao.insert(new User(1,userName.getText().toString(),displayName.getText().toString(),password.getText().toString()));
+                }
                 // insert the current user -> display name isn't updated yet!
-                userDao.insert(new User(1,userName.getText().toString(),displayName.getText().toString(),password.getText().toString()));
                 Log.d("Register_Logging", "Added a new user to DB");
                 Intent i = new Intent(RegisterActivity.this, ChatsListActivity.class);
                 startActivity(i);

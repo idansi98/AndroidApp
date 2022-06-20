@@ -4,8 +4,6 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.androidapp.MyApplication;
-import com.example.androidapp.R;
 import com.example.androidapp.classes.Chat;
 import com.example.androidapp.classes.ChatDao;
 import com.example.androidapp.classes.Message;
@@ -60,7 +58,7 @@ public class MessageApi {
 
         // create a retrofit
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                .baseUrl("http://"+ userDao.index().get(0).getDefaultServerAdr()+"/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
@@ -114,7 +112,7 @@ public class MessageApi {
                     MediaType.parse("application/json"), json);
 
             Request request = new Request.Builder()
-                    .url("http://10.0.2.2:25565/api/login")
+                    .url("http://"+userDao.index().get(0).getDefaultServerAdr()+"/api/login")
                     .post(body)
                     .build();
 

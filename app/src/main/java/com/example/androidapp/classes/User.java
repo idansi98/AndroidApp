@@ -17,7 +17,15 @@ public class User {
         this.userName = userName;
         this.displayName = displayName;
         this.password = password;
-        this.defaultServerAdr =  "10.0.2.2";
+        this.defaultServerAdr =  "10.0.2.2:25565";
+    }
+
+    public User(int id, String userName, String displayName, String password, String defaultServerAdr) {
+        this.id = id;
+        this.userName = userName;
+        this.displayName = displayName;
+        this.password = password;
+        this.defaultServerAdr =  defaultServerAdr;
     }
 
 

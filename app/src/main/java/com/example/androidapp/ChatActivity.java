@@ -125,10 +125,10 @@ public class ChatActivity extends AppCompatActivity {
                     return "yey";
                 }
                 mutex.acquire();
-                // same connection
+                // same connection cookies
                 CookieManager cookieManager = new CookieManager();
                 CookieHandler.setDefault(cookieManager);
-
+                // get vars
                 Chat chat = chatDao.get(contact_name);
                 User currentUser = userDao.index().get(0);
                 if (chat == null) {
@@ -136,11 +136,14 @@ public class ChatActivity extends AppCompatActivity {
                     return "idk";
                 }
                 String server_adr = chat.getServerAdr();
-                // send the message to the othher server
+
+
+                // send the message to the other server
                 try {
                     String url_to_send;
                     Log.d("Chat_Logging", "Server addr is " + server_adr);
-                    if (server_adr.contains("localhost:25565")) {
+                    // TODO: check
+                    if (server_adr.contains("localhost")) {
                          url_to_send  = "http://10.0.2.2:25565/api/transfer";
                     } else {
                          url_to_send  = "http://"+server_adr+"/api/transfer";
@@ -168,7 +171,7 @@ public class ChatActivity extends AppCompatActivity {
                     con.disconnect();
 
                     // send the message to this server
-                    String url_to_send2  = "http://10.0.2.2:25565/" + "api/contacts/" + contact_name +"/messages";
+                    String url_to_send2  = "http://"+userDao.index().get(0).getDefaultServerAdr() + "/api/contacts/" + contact_name +"/messages";
                     URL url2 = new URL(url_to_send2);
                     HttpURLConnection con2 = (HttpURLConnection) url2.openConnection();
                     // login
@@ -238,7 +241,7 @@ public class ChatActivity extends AppCompatActivity {
     private void tryLogin()  {
         try {
             User user = userDao.index().get(0);
-            URL url = new URL("http://10.0.2.2:25565/api/login");
+            URL url = new URL("http://"+userDao.index().get(0).getDefaultServerAdr()+"/api/login");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("content-type", "application/json");

@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private AppDB db;
     private UserDao userDao;
     EditText userName, password;
-    Button loginButton, toRegisterButton;
+    Button loginButton, toRegisterButton, goToSettingsButton;
     boolean login_status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.editTextTextPassword);
         loginButton = findViewById(R.id.loginButton);
         toRegisterButton = findViewById(R.id.toRegButton);
+        goToSettingsButton = findViewById(R.id.goToSettingsButton);
+
         //if logged in already -> go to chats
         if(userDao.index().size()!=0) {
             Intent i = new Intent(this, ChatsListActivity.class);
@@ -54,6 +56,20 @@ public class LoginActivity extends AppCompatActivity {
         });
         toRegisterButton.setOnClickListener(v -> {
             Intent i = new Intent(this, RegisterActivity.class);
+            Intent thisIntent = getIntent();
+            if (thisIntent.hasExtra("server_adr")) {
+                String server_adr = thisIntent.getStringExtra("server_adr");
+                i.putExtra("server_adr",server_adr);
+            }
+            startActivity(i);
+        });
+        goToSettingsButton.setOnClickListener(v -> {
+            Intent i = new Intent(this, SettingsActivity.class);
+            Intent thisIntent = getIntent();
+            if (thisIntent.hasExtra("server_adr")) {
+                String server_adr = thisIntent.getStringExtra("server_adr");
+                i.putExtra("server_adr",server_adr);
+            }
             startActivity(i);
         });
     }
@@ -91,7 +107,14 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             Log.d("Login_Logging", "Async method started running");
             try {
-                URL url = new URL("http://10.0.2.2:25565/api/login");
+                String urlString;
+                Intent thisIntent = getIntent();
+                if (thisIntent.hasExtra("server_adr")) {
+                     urlString = thisIntent.getStringExtra("server_adr");
+                } else {
+                     urlString = "10.0.2.2:25565";
+                }
+                URL url = new URL("http://" + urlString+"/api/login");
                 Log.d("Login_Logging", "Trying to connect to: " + url.toString());
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
@@ -128,7 +151,13 @@ public class LoginActivity extends AppCompatActivity {
             // assuming we are logging in ONLY if no user is set in DAO
             if(login_status) {
                 // insert the current user -> display name isn't updated yet!
-                userDao.insert(new User(1,userName.getText().toString(),userName.getText().toString(),password.getText().toString()));
+                Intent thisIntent = getIntent();
+                if (thisIntent.hasExtra("server_adr")) {
+                    String server_adr = thisIntent.getStringExtra("server_adr");
+                    userDao.insert(new User(1,userName.getText().toString(),userName.getText().toString(),password.getText().toString(),server_adr));
+                } else {
+                    userDao.insert(new User(1,userName.getText().toString(),userName.getText().toString(),password.getText().toString()));
+                }
                 Log.d("Login_Logging", "Entered logging clause");
                 Intent i = new Intent(LoginActivity.this, ChatsListActivity.class);
                 startActivity(i);

@@ -81,7 +81,7 @@ public class ChatsListActivity extends AppCompatActivity {
                             RequestBody body = RequestBody.create(
                                     MediaType.parse("application/json"), json);
                             Request request = new Request.Builder()
-                                    .url("http://10.0.2.2:25565/api/firebase")
+                                    .url("http://"+userDao.index().get(0).getDefaultServerAdr()+"/api/firebase")
                                     .post(body)
                                     .build();
 
@@ -147,7 +147,7 @@ public class ChatsListActivity extends AppCompatActivity {
                     MediaType.parse("application/json"), json);
 
             Request request = new Request.Builder()
-                    .url("http://10.0.2.2:25565/api/login")
+                    .url("http://"+ userDao.index().get(0).getDefaultServerAdr()+"/api/login")
                     .post(body)
                     .build();
 

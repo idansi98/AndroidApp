@@ -138,14 +138,11 @@ public class ChatActivity extends AppCompatActivity {
 
                 // send the message to the other server
                 try {
-                    String url_to_send;
                     Log.d("Chat_Logging", "Server addr is " + server_adr);
                     // TODO: check
-                    if (server_adr.contains("localhost")) {
-                         url_to_send  = "http://10.0.2.2:25565/api/transfer";
-                    } else {
-                         url_to_send  = "http://"+server_adr+"/api/transfer";
-                    }
+                    server_adr = server_adr.replace("localhost","10.0.2.2");
+                    String url_to_send  = "http://"+server_adr+"/api/transfer";
+
                     URL url = new URL(url_to_send);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("POST");

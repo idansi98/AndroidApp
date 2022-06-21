@@ -67,5 +67,19 @@
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@android:drawable/ic_menu_add" />
 
+        <ImageView
+            android:id="@+id/chatListPFP"
+            android:adjustViewBounds="true"
+            android:layout_width="66dp"
+            android:layout_height="61dp"
+            android:maxHeight="@android:dimen/app_icon_size"
+            android:maxWidth="@android:dimen/app_icon_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/addContact"
+            app:layout_constraintStart_toEndOf="@+id/signOffButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:srcCompat="@tools:sample/avatars" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

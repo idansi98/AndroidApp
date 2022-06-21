@@ -1,10 +1,11 @@
 package com.example.androidapp;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,17 +19,17 @@ import com.example.androidapp.adapters.ChatsListAdapter;
 import com.example.androidapp.api.ContactApi;
 import com.example.androidapp.classes.AppDB;
 import com.example.androidapp.classes.ChatDao;
+import com.example.androidapp.classes.EncodedImage;
+import com.example.androidapp.classes.EncodedImageDao;
 import com.example.androidapp.classes.MessageDao;
 import com.example.androidapp.classes.User;
 import com.example.androidapp.classes.UserDao;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import java.io.IOException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +44,7 @@ public class ChatsListActivity extends AppCompatActivity {
     private UserDao userDao;
     private ChatDao chatDao;
     private MessageDao messageDao;
+    private EncodedImageDao imageDao;
     private Semaphore mutex = new Semaphore(1);
 
     @Override
@@ -55,6 +57,7 @@ public class ChatsListActivity extends AppCompatActivity {
         userDao = db.userDao();
         chatDao = db.chatDao();
         messageDao = db.messageDao();
+        imageDao = db.encodedImageDao();
 
 
         // get a firebase token
@@ -101,6 +104,7 @@ public class ChatsListActivity extends AppCompatActivity {
         RecyclerView chatsList = findViewById(R.id.chatsList);
         ImageView signOffButton = findViewById(R.id.signOffButton);
         ImageView addContact = findViewById(R.id.addContact);
+        ImageView chatListPFP = findViewById(R.id.chatListPFP);
         final ChatsListAdapter adapter = new ChatsListAdapter(this);
         chatsList.setAdapter(adapter);
         chatsList.setLayoutManager(new LinearLayoutManager(this));
@@ -136,6 +140,25 @@ public class ChatsListActivity extends AppCompatActivity {
             Intent i = new Intent(ChatsListActivity.this, LoginActivity.class);
             startActivity(i);
         });
+
+        // set the PFP
+        List<EncodedImage> images = imageDao.index();
+        String userName = userDao.index().get(0).getUserName();
+        boolean useDefaultPFP = true;
+
+        for (EncodedImage im: images) {
+            if (im.getContactName().contentEquals(userName)){
+                useDefaultPFP = false;
+                Uri uri = Uri.parse(im.getUriString());
+                ContentResolver contentResolver;
+                getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                chatListPFP.setImageURI(uri);
+            }
+        }
+        if (useDefaultPFP) {
+            chatListPFP.setImageResource(R.drawable.logo);
+        }
+
 
     }
 

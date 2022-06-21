@@ -13,6 +13,8 @@ import com.example.androidapp.R;
 import com.example.androidapp.classes.Message;
 import com.example.androidapp.classes.MessageDao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter {
@@ -41,14 +43,10 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     private final LayoutInflater mInflater;
     private List<Message> messages;
-    private final Context context;
-    private MessageDao messageDao;
     private int senderViewType = 1;
     private int receiverViewType = 2;
-    private String username;
 
     public ChatAdapter(Context context) {
-        this.context = context;
         mInflater = LayoutInflater.from(context);
     }
     @NonNull
@@ -68,14 +66,29 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (messages != null) {
             Message message = messages.get(position);
+            Date date = new Date(message.getTimeInMS());
+
+
+            String pattern = "dd-MM hh:mm";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String dateStr = simpleDateFormat.format(date);
             if (holder.getClass() == SenderViewHolder.class) {
                 ((SenderViewHolder)holder).senderText.setText(message.getText());
-                ((SenderViewHolder)holder).senderTime.setText("" +  message.getTimeInMS());
+                ((SenderViewHolder)holder).senderTime.setText(dateStr);
             }
             else {
                 ((ReceiverViewHolder)holder).receiverText.setText(message.getText());
-                ((ReceiverViewHolder)holder).receiverTime.setText("" + message.getTimeInMS());
+                ((ReceiverViewHolder)holder).receiverTime.setText(dateStr);
             }
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (messages.get(position).isUserSent()) {
+            return senderViewType;
+        } else {
+            return receiverViewType;
         }
     }
 
@@ -84,15 +97,6 @@ public class ChatAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void setMessageDao(MessageDao messageDao) {
-        this.messageDao = messageDao;
-        notifyDataSetChanged();
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-        notifyDataSetChanged();
-    }
 
 
 

@@ -16,6 +16,8 @@ import com.example.androidapp.classes.UserDao;
 import java.io.IOException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -126,17 +128,16 @@ public class MessageApi {
     }
 
     private long convertToTimeFormat(String str) {
-        return 0;
-//        try {
-//            // TODO: fix the time thing
-////            String pattern = "yyyy-MM-ddTHH:mm:ss.fffffff";
-////            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-////            Date date = simpleDateFormat.parse(str);
-////            return date.getTime();
-//        } catch (Exception ex) {
-//            Log.d("API_LOGGING","Exception at converting time "+ ex.getMessage());
-//            return 0;
-//        }
+        try {
+
+            String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSS";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            Date date = simpleDateFormat.parse(str);
+            return date.getTime();
+        } catch (Exception ex) {
+            Log.d("API_LOGGING","Exception at converting time "+ ex.getMessage());
+            return 0;
+        }
 
     }
 }

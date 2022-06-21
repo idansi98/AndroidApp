@@ -57,8 +57,6 @@ public class ChatActivity extends AppCompatActivity {
         chat.setLayoutManager(new LinearLayoutManager(this));
         ContactApi contactApi = new ContactApi(userDao, chatDao, messageDao);
 
-        adapter.setMessageDao(messageDao);
-        adapter.setUsername(username);
         adapter.setMessages(messageDao.get(username));
         // get new messages
         ChatActivity.RefreshingTask task = new ChatActivity.RefreshingTask();

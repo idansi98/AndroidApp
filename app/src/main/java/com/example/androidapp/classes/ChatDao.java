@@ -13,9 +13,9 @@ public interface ChatDao {
 
     @Query("SELECT * FROM chat")
     List<Chat> index();
- //   @Query("SELECT * FROM message WHERE timeInMS)
-   // @Query("SELECT *  FROM chat ORDER BY lastDate DESC, id DESC")
-   // List<Chat> getAllChats();
+//    @Query("SELECT * FROM message WHERE timeInMS)
+//    @Query("SELECT *  FROM chat ORDER BY lastDate DESC, id DESC")
+//    List<Chat> getAllChats();
     @Query("SELECT * FROM chat WHERE userName = :userName")
     Chat get(String userName);
     @Insert

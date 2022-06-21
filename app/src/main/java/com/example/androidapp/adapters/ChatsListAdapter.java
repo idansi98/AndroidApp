@@ -17,6 +17,8 @@ import com.example.androidapp.classes.Chat;
 import com.example.androidapp.classes.Message;
 import com.example.androidapp.classes.MessageDao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.ChatViewHolder> {
@@ -62,7 +64,13 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
             if (messages.size() > 0) {
                 Message lastMessage = messages.get(messages.size()-1);
                 holder.lastMessage.setText(lastMessage.getText());
-                holder.dateTime.setText("Time in ms: " +lastMessage.getTimeInMS());
+                Date date = new Date(lastMessage.getTimeInMS());
+
+
+                String pattern = "dd-MM hh:mm";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                String dateStr = simpleDateFormat.format(date);
+                holder.dateTime.setText(dateStr);
             } else {
                 holder.lastMessage.setText("");
                 holder.dateTime.setText("");

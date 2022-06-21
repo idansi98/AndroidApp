@@ -19,11 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_marginStart="4dp"
-        android:inputType="textLongMessage|textMultiLine"
+        android:inputType="textLongMessage|textMultiLine|textNoSuggestions"
         android:maxWidth="270dp"
         android:minWidth="50dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/receiverTime"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />

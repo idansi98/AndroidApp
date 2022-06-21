@@ -32,8 +32,11 @@ public class ChatService extends FirebaseMessagingService {
         String messageBody = message.getNotification().getBody();
         Log.d("Firebase_Logging", "Got a message from " +contactDisplayName + "\nContents: " + messageBody);
         makeNotification(contactDisplayName, messageBody);
-        //TODO: request user to update his DB
 
+
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(ChatActivity.NOTIFY_ACTIVITY_ACTION);
+        sendBroadcast(broadcastIntent);
     }
 
     private void createNotificationChannel() {
@@ -55,7 +58,8 @@ public class ChatService extends FirebaseMessagingService {
     private void makeNotification(String contactDisplayName, String message) {
         // create a pending intent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Intent intent = new Intent(this,ChatsListActivity.class);
+            Intent intent = new Intent(this,ChatActivity.class);
+            intent.putExtra("username",contactDisplayName);
             PendingIntent pendingIntent = PendingIntent.getActivity(this,1,intent,PendingIntent.FLAG_IMMUTABLE);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Channel_ID)

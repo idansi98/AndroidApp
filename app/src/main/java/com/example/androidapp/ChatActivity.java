@@ -1,6 +1,9 @@
 package com.example.androidapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,7 +38,12 @@ public class ChatActivity extends AppCompatActivity {
     private ChatDao chatDao;
     private MessageDao messageDao;
     private Semaphore mutex = new Semaphore(1);
-
+    public static final String NOTIFY_ACTIVITY_ACTION = "notify_activity";
+    private BroadcastReceiver broadcastReceiver;
+    private ChatAdapter adapter;
+    private ContactApi contactApi;
+    private String username;
+    private RecyclerView chat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +56,14 @@ public class ChatActivity extends AppCompatActivity {
         messageDao = db.messageDao();
 
         Intent thisIntent = getIntent();
-        String username = thisIntent.getStringExtra("username");
-        RecyclerView chat = findViewById(R.id.chatRecyclerView);
+        username = thisIntent.getStringExtra("username");
+        chat = findViewById(R.id.chatRecyclerView);
         TextView userNameView = findViewById(R.id.userName);
         userNameView.setText(username);
-        final ChatAdapter adapter = new ChatAdapter(this);
+        adapter = new ChatAdapter(this);
         chat.setAdapter(adapter);
         chat.setLayoutManager(new LinearLayoutManager(this));
-        ContactApi contactApi = new ContactApi(userDao, chatDao, messageDao);
+        contactApi = new ContactApi(userDao, chatDao, messageDao);
 
         adapter.setMessages(messageDao.get(username));
         // get new messages
@@ -77,6 +85,33 @@ public class ChatActivity extends AppCompatActivity {
             task1.execute();
         });
     }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(NOTIFY_ACTIVITY_ACTION)) {
+                    ChatActivity.RefreshingTask task = new ChatActivity.RefreshingTask();
+                    task.setAdapter(adapter);
+                    task.setContactApi(contactApi);
+                    task.setContactName(username);
+                    task.execute();
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(NOTIFY_ACTIVITY_ACTION);
+        registerReceiver(broadcastReceiver, filter);
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        unregisterReceiver(broadcastReceiver);
+    }
+
     private class RefreshingTask extends AsyncTask<String, String, String> {
         private ContactApi contactApi2;
         private ChatAdapter adapter2;
@@ -216,6 +251,8 @@ public class ChatActivity extends AppCompatActivity {
             task.execute();
             // remove the message
             messageTextView.setText("");
+            chat.smoothScrollToPosition(chat.FOCUS_DOWN);
+
         }
 
         public void setMessageTextView(TextView messageTextView) {

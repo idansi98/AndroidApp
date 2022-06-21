@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.R;
 import com.example.androidapp.classes.Message;
-import com.example.androidapp.classes.MessageDao;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,7 +84,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (messages.get(position).isUserSent()) {
+        if (!messages.get(position).isUserSent()) {
             return senderViewType;
         } else {
             return receiverViewType;

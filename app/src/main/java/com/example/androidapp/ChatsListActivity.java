@@ -1,7 +1,10 @@
 package com.example.androidapp;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,6 +49,13 @@ public class ChatsListActivity extends AppCompatActivity {
     private MessageDao messageDao;
     private EncodedImageDao imageDao;
     private Semaphore mutex = new Semaphore(1);
+    public static final String NOTIFY_ACTIVITY_ACTION = "notify_activity";
+    private BroadcastReceiver broadcastReceiver;
+    private ChatsListAdapter adapter;
+    private ContactApi contactApi;
+    private SwipeRefreshLayout layout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,14 +115,14 @@ public class ChatsListActivity extends AppCompatActivity {
         ImageView signOffButton = findViewById(R.id.signOffButton);
         ImageView addContact = findViewById(R.id.addContact);
         ImageView chatListPFP = findViewById(R.id.chatListPFP);
-        final ChatsListAdapter adapter = new ChatsListAdapter(this);
+        adapter = new ChatsListAdapter(this);
         chatsList.setAdapter(adapter);
         chatsList.setLayoutManager(new LinearLayoutManager(this));
-        ContactApi contactApi = new ContactApi(userDao, chatDao, messageDao);
+        contactApi = new ContactApi(userDao, chatDao, messageDao);
         adapter.setMessageDao(messageDao);
         adapter.setChats(chatDao.index());
         // refresh initially
-        SwipeRefreshLayout layout = findViewById(R.id.refreshLayout);
+        layout = findViewById(R.id.refreshLayout);
         ChatsListActivity.RefreshingTask task = new ChatsListActivity.RefreshingTask();
         task.setAdapter(adapter);
         task.setContactApi(contactApi);
@@ -126,16 +136,60 @@ public class ChatsListActivity extends AppCompatActivity {
             task2.setLayout(layout);
             task2.execute();
         });
-        // signing off
+        // Add contact
         addContact.setOnClickListener(v -> {
             Intent i = new Intent(this, AddContactActivity.class);
             startActivity(i);
         });
+        // Sign off
         signOffButton.setOnClickListener(v -> {
+// remove the firebase token
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+
+                        // cookie manager
+                        CookieHandler cookieHandler = new CookieManager();
+
+                        // make a new session
+                        OkHttpClient client = new OkHttpClient.Builder()
+                                .cookieJar(new JavaNetCookieJar(cookieHandler))
+                                .connectTimeout(15, TimeUnit.SECONDS)
+                                .readTimeout(20, TimeUnit.SECONDS)
+                                .writeTimeout(20, TimeUnit.SECONDS)
+                                .retryOnConnectionFailure(true)
+                                .build();
+                        tryLogin(client);
+                        String json = "\"" + "bye bye" + "\"";
+
+                        RequestBody body = RequestBody.create(
+                                MediaType.parse("application/json"), json);
+
+                        Request request = new Request.Builder()
+                                .url("http://"+userDao.index().get(0).getDefaultServerAdr()+"/api/firebase")
+                                .post(body)
+                                .build();
+
+                        okhttp3.Call call = client.newCall(request);
+                        okhttp3.Response response = call.execute();
+                        Log.d("Firebase_Logging", "Firebase log out attempt: " + response.message() + response.code());
+                    } catch (IOException ex) {
+                        Log.d("Firebase_Logging", "Couldn't log out: " + ex.getMessage());
+                    }
+
+                }
+            };
+            thread.start();
+            try {
+                thread.join();
+            } catch (Exception ex) {
+                // something
+            }
             // reset the DB
             messageDao.resetTable();
             chatDao.resetTable();
             userDao.resetTable();
+
             // go to the main screen
             Intent i = new Intent(ChatsListActivity.this, LoginActivity.class);
             startActivity(i);
@@ -162,6 +216,31 @@ public class ChatsListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(NOTIFY_ACTIVITY_ACTION)) {
+                    ChatsListActivity.RefreshingTask task = new ChatsListActivity.RefreshingTask();
+                    task.setAdapter(adapter);
+                    task.setContactApi(contactApi);
+                    task.setLayout(layout);
+                    task.execute();
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(NOTIFY_ACTIVITY_ACTION);
+        registerReceiver(broadcastReceiver, filter);
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        unregisterReceiver(broadcastReceiver);
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

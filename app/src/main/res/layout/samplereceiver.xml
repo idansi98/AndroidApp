@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentLeft="false"
-    android:layout_alignParentRight="true"
     android:layout_marginStart="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="7dp"
     android:layout_marginRight="7dp"
-    android:background="@drawable/bg_sender"
+    android:background="@drawable/bg_receiver"
     android:maxWidth="310dp"
     android:maxHeight="400dp">
 

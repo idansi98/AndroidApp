@@ -210,7 +210,7 @@ public class ChatsListActivity extends AppCompatActivity {
             }
         }
         if (useDefaultPFP) {
-            chatListPFP.setImageResource(R.drawable.logo);
+            chatListPFP.setImageResource(R.drawable.defaultpfp);
         }
 
 

@@ -90,8 +90,8 @@
 
     <ImageView
         android:id="@+id/currentPFPPicked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="166dp"
+        android:layout_height="139dp"
         android:adjustViewBounds="true"
         android:background="#3B393636"
         android:clickable="true"
@@ -101,9 +101,10 @@
         android:maxHeight="@android:dimen/thumbnail_height"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal"
+        app:layout_constraintVertical_bias="0.633"
+        app:srcCompat="@drawable/defaultpfp"
         tools:ignore="SpeakableTextPresentCheck" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

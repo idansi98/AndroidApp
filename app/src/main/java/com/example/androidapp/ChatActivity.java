@@ -30,6 +30,7 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 import java.util.concurrent.Semaphore;
 
 public class ChatActivity extends AppCompatActivity {
@@ -44,6 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     private ContactApi contactApi;
     private String username;
     private RecyclerView chat;
+    private ImageView contactPFP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +61,12 @@ public class ChatActivity extends AppCompatActivity {
         username = thisIntent.getStringExtra("username");
         chat = findViewById(R.id.chatRecyclerView);
         TextView userNameView = findViewById(R.id.userName);
-        userNameView.setText(username);
+        userNameView.setText(chatDao.get(username).getDisplayName());
         adapter = new ChatAdapter(this);
         chat.setAdapter(adapter);
         chat.setLayoutManager(new LinearLayoutManager(this));
         contactApi = new ContactApi(userDao, chatDao, messageDao);
+        contactPFP = findViewById(R.id.profile_image);
 
         adapter.setMessages(messageDao.get(username));
         // get new messages
@@ -84,6 +87,31 @@ public class ChatActivity extends AppCompatActivity {
             task1.setContactName(username);
             task1.execute();
         });
+
+        // set a random pfp for contact
+        // set random pic
+        char firstLetter = username.toLowerCase(Locale.ROOT).charAt(0);
+        if (firstLetter < 'c') {
+            contactPFP.setImageResource(R.drawable.pfp1);
+        } else            if (firstLetter < 'f') {
+            contactPFP.setImageResource(R.drawable.pfp2);
+        } else            if (firstLetter < 'i') {
+            contactPFP.setImageResource(R.drawable.pfp3);
+        } else            if (firstLetter < 'l') {
+            contactPFP.setImageResource(R.drawable.pfp4);
+        } else            if (firstLetter < 'o') {
+            contactPFP.setImageResource(R.drawable.pfp5);
+        } else            if (firstLetter < 'r') {
+            contactPFP.setImageResource(R.drawable.pfp6);
+        } else            if (firstLetter < 't') {
+            contactPFP.setImageResource(R.drawable.pfp7);
+        } else            if (firstLetter < 'w') {
+            contactPFP.setImageResource(R.drawable.pfp8);
+        } else            if (firstLetter < 'y') {
+            contactPFP.setImageResource(R.drawable.pfp9);
+        } else {
+            contactPFP.setImageResource(R.drawable.pfp10);
+        }
     }
 
 

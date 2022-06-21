@@ -13,6 +13,9 @@ This is a chatting app co-developed by [Ido Tziony](https://github.com/ghsumhubh
 The user might initially navigate between these following activities: login, register, settings.
 Whenever a user signs in they are greeted to the chat list activity where they can open individual chats, create new ones, or log off.
 
+### Notes for Usage
+1. In the contact creation screen, the expected server format is "ADDRESS_WITHOUT_HTTP:PORT", e.g., "localhost:7100".  
+
 ### Expected Behavior
 1. Registering with a new picture saves it locally.
 

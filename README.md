@@ -3,9 +3,9 @@ This is a chatting app co-developed by [Ido Tziony](https://github.com/ghsumhubh
 
 
 ## How to Run  
-1. Make sure you have correctly installed and ran the server from [here](https://github.com/idansi98/App/tree/UpdatedApi4)
-2. Open the project with Android Studio
-3. Run the application
+1. Make sure you have correctly installed and ran the server from [here](https://github.com/idansi98/App/tree/UpdatedApi4).
+2. Open the project with Android Studio.
+3. Run the application.
 
 
 
@@ -14,10 +14,11 @@ The user might initially navigate between these following activities: login, reg
 Whenever a user signs in they are greeted to the chat list activity where they can open individual chats, create new ones, or log off.
 
 ### Notes for Usage
-1. In the contact creation screen, the expected server format is "ADDRESS_WITHOUT_HTTP:PORT", e.g., "localhost:7100".  
+1. In the contact creation screen, the expected server format is "ADDRESS_WITHOUT_HTTP:PORT", e.g., "localhost:25565".  
 
 ### Expected Behavior
-1. Registering with a new picture saves it locally.
+1. Registering with a new picture saves it locally.  
+2. Even after loging - out, the profile picture is saved for every registered user.  
 
 
 

@@ -11,6 +11,7 @@ public class Chat {
     private String userName;
     private String displayName;
     private String serverAdr;
+    //private long  lastDate;
 
     public Chat(int id, String userName, String displayName, String serverAdr) {
         this.id = id;
